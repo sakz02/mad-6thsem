@@ -1,0 +1,41 @@
+city.json
+
+[
+  {
+    "City_Name": "Mandya",
+    "Latitude":"12.987",
+    "Longitude":"54.325",
+    "Temperature":"34",
+    "Humidity":"21"
+  },
+  {
+    "City_Name": "Hassan",
+    "Latitude":"14.987",
+    "Longitude":"24.325",
+    "Temperature":"24",
+    "Humidity":"31"
+  }
+]
+
+
+city.xml
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<records>
+    <place>
+        <City_Name>Hassan</City_Name>
+        <Latitude>12.332</Latitude>
+        <Longitude>13.220</Longitude>
+        <Temperature>32</Temperature>
+        <Humidity>22</Humidity>
+    </place>
+
+    <place>
+        <City_Name>Mandya</City_Name>
+        <Latitude>10.332</Latitude>
+        <Longitude>33.220</Longitude>
+        <Temperature>41</Temperature>
+        <Humidity>22</Humidity>
+    </place>
+</records>

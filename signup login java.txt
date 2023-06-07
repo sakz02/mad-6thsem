@@ -1,0 +1,135 @@
+MainActivity.java 
+
+
+package com.example.signup;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.regex.Pattern;
+
+public class MainActivity extends AppCompatActivity {
+
+EditText sign,pass;
+Button signup;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        sign=findViewById(R.id.login_username);
+        pass=findViewById(R.id.login_pass);
+    }
+    public void signUpEvent(View view){
+
+        String uname=sign.getText().toString();
+        String pwd=pass.getText().toString();
+
+        if(!isValidPassword(pwd)){
+            Toast.makeText(MainActivity.this,"invalid password",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Intent intent=new Intent(MainActivity.this,loginactivity.class);
+        intent.putExtra("username",uname);
+        intent.putExtra("password",pwd);
+        startActivity(intent);
+    }
+    Pattern lowercase=Pattern.compile("^.*[a-z].*$");
+    Pattern uppercase=Pattern.compile("^.*[A-Z].*$");
+    Pattern digit=Pattern.compile("^.*[0-9].*$");
+    Pattern specialchar=Pattern.compile("^.*[^a-zA-Z0-9].*$");
+
+    private boolean isValidPassword(String pwd){
+        if(pwd.length()<8)
+            return false;
+        if(!lowercase.matcher(pwd).matches())
+            return false;
+        if(!uppercase.matcher(pwd).matches())
+            return false;
+        if(!digit.matcher(pwd).matches())
+            return false;
+        if(!specialchar.matcher(pwd).matches())
+            return false;
+        return true;
+    }
+    public void loginEvent(View view){
+
+    }
+}
+
+
+loginactivity.java
+
+package com.example.signup;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class loginactivity extends AppCompatActivity {
+    EditText login,pwd;
+    Button bl;
+    int counter=3;
+
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_loginactivity);
+
+        login=findViewById(R.id.login_username);
+        pwd=findViewById(R.id.login_pass);
+        bl=findViewById(R.id.loginbut);
+    }
+
+    public void loginEvent(View view){
+        String uname=login.getText().toString();
+        String pword=pwd.getText().toString();
+        String reguser=getIntent().getStringExtra("username");
+        String regpwd=getIntent().getStringExtra("password");
+
+        if (reguser.equals(uname) && regpwd.equals(pword)){
+            Intent intent=new Intent(loginactivity.this,loginsuccess.class);
+            startActivity(intent);
+        }else{
+            Toast.makeText(loginactivity.this,"invalid password",Toast.LENGTH_SHORT).show();
+        }
+        counter--;
+        if (counter==0){
+            Toast.makeText(getBaseContext(),"invalid credentials",Toast.LENGTH_SHORT).show();
+            bl.setEnabled(false);
+        }
+    }
+}
+
+loginsuccess.java
+
+package com.example.signup;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+public class loginsuccess extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_loginsuccess);
+    }
+}
+
+
